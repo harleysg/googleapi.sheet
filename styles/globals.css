@@ -1,16 +1,79 @@
+:root {
+  --fz: 16px;
+  --theme-color: #e8e8e8;
+  --theme-bg-color: #010a16;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  }
+  
+  html {
+    font-size: var(--fz);
+  }
+
+body {
+  background-color: var(--theme-bg-color);
+  color: var(--theme-color);
+  font-size: 1rem;
 }
 
 a {
   color: inherit;
+  color: #0070f3;
   text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+  text-decoration: underline;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* nextjs hack selector */
+body > [id] {
+  background-color: inherit;
+}
+
+.o-wrapper {
+  width: 100%;
+  max-width: 120rem;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+.o-main {
+  min-height: 90vh;
+  padding: 2.5rem 0;
+  display: grid;
+}
+
+.o-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: inherit;
+}
+
+.o-header_link {
+  color: var(--theme-color);
+  padding: 0.2rem 0.5rem;
+}
+.o-header_nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.o-header_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
