@@ -1,15 +1,15 @@
-import { useCallback, useRef, useState } from 'react';
-import Layout from '@components/layout';
-import { sheetPost } from '@services/index';
+import { useCallback, useRef, useState } from 'react'
+import Layout from '@components/layout'
+import { sheetPost } from '@services/index'
 
-const IData = { isAvailable: false, message: '', success: false };
+const IData = { isAvailable: false, message: '', success: false }
 
 export default function LoginPage() {
-  const formRef = useRef(null);
+  const formRef = useRef(null)
   const [form, setForm] = useState({
     email: '',
     password: ''
-  });
+  })
 
   const submitHandler = useCallback(
     (event) => {
@@ -20,12 +20,13 @@ export default function LoginPage() {
         if (data.success && data.isAvailable) {
           formRef.current.reset();
         }
-      });
+      })
     },
     [form]
-  );
+  )
+
   return (
-    <Layout title='Login'>
+    <Layout title='Adviser'>
       <form onSubmit={submitHandler} ref={formRef}>
         <input
           type={'email'}
