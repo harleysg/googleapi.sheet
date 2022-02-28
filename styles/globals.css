@@ -1,6 +1,7 @@
 :root {
   --fz: 16px;
   --theme-color: #e8e8e8;
+  --theme-color-link: #0070f3;
   --theme-bg-color: #010a16;
 }
 
@@ -24,7 +25,7 @@ body {
 
 a {
   color: inherit;
-  color: #0070f3;
+  color: var(--theme-color-link);
   text-decoration: none;
 }
 
@@ -76,4 +77,11 @@ body > [id] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.o-header_link:hover,
+.o-header_link:focus,
+.o-header_link:active,
+.o-header_link.is-active {
+  color: var(--theme-color-link);
 }
