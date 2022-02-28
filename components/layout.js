@@ -1,7 +1,11 @@
-import Head from 'next/head';
-import Header from './header';
+import Head from 'next/head'
+import Header from './header'
+
+import { useSession } from "next-auth/react"
 
 export default function Layout({ children, title = 'googleapi sheet' }) {
+  const { data: session } = useSession()
+
   return (
     <>
       <Head>
@@ -10,7 +14,7 @@ export default function Layout({ children, title = 'googleapi sheet' }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <Header />
+      <Header session={session} />
 
       <main className='o-main'>
         <div className='o-wrapper'>{children}</div>

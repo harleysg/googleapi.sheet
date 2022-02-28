@@ -18,7 +18,19 @@ const sheetGet = () => fetchSheet({
   }
 })
 
+function TableFactory(values) {
+  const table = {};
+  
+  if (values) {
+    table.header = values[0];
+    table.body = values.slice(1);
+  }
+
+  return table
+}
+
 export {
   sheetGet,
-  sheetPost
+  sheetPost,
+  TableFactory
 }
