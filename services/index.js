@@ -29,8 +29,12 @@ function TableFactory(values) {
   return table
 }
 
+const getNameToEmail = (name = '@fake.com') =>
+  `${name.split('', 1)[0].toUpperCase()}${name.slice(1).split('@', 1)[0]}`
+
 export {
   sheetGet,
   sheetPost,
-  TableFactory
+  TableFactory,
+  getNameToEmail
 }
