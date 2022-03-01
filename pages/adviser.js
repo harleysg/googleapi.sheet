@@ -6,7 +6,7 @@ import { sheetPost, getNameToEmail } from '@services/index'
 import Layout from '@components/layout'
 import Table from '@components/table'
 
-export default function () {
+export default function Adviser() {
   const { data: session } = useSession()
   const formRef = useRef(null)
   const [pageInfo, setPageInfo] = useState({
@@ -44,7 +44,7 @@ export default function () {
           title: `Hola ${getNameToEmail(session?.user?.email)}`,
         }))
       })
-  }, [setPageInfo])
+  }, [session, setPageInfo])
 
   if (!session) {
     return (
