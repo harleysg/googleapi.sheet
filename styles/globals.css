@@ -30,7 +30,6 @@ button {
 
 a {
   color: inherit;
-  color: var(--theme-color-link);
   text-decoration: none;
 }
 
@@ -57,7 +56,7 @@ body > [id] {
 }
 
 .o-main {
-  min-height: 90vh;
+  min-height: 85vh;
   padding: 2.5rem 0;
 }
 
@@ -66,6 +65,23 @@ body > [id] {
   top: 0;
   width: 100%;
   background-color: inherit;
+}
+
+.o-footer {
+  display: flex;
+  flex: 1;
+  padding: 1rem 0;
+  border-top: 1px solid #eaeaea;
+  justify-content: center;
+  align-items: center;
+}
+.o-footer a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
+  gap: 5px;
+  text-decoration: none;
 }
 
 .c-btn,
@@ -121,6 +137,17 @@ body > [id] {
 .c-btn:hover,
 .c-btn:focus {
   background-color: var(--theme-color-link);
+}
+
+.c-link {
+  color: var(--theme-color-link);
+  text-decoration: none;
+}
+
+.c-link:hover,
+.c-link:focus,
+.c-link:active {
+  text-decoration: none;
 }
 
 .c-table_wrapper {
