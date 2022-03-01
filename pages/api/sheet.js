@@ -2,20 +2,52 @@ import { getSession } from "next-auth/react"
 
 import { getSheets } from '@services/google.sheets'
 import { TableFactory } from '@services/index'
+import { DATABASE_SHEETS, SHEET_API_ACTIONS } from "@constants/index";
 
-async function handleGetTable(res) {
-  getSheets({
+async function getAdviserClients(req, res) {
+  return getSheets({
     spreadsheetId: process.env.DATABASE_ID,
-    range: 'Hoja 1'
+    range: DATABASE_SHEETS.CLIENTS
   })
-    .then(({ data }) => {
+  .then(({ data }) => {
+      const { user } = req.body
       const table = TableFactory(data.values);
+
+      if (user) {
+        table.body = table.body.filter(row => row[0].includes(user))
+      }
 
       res.status(201).json({
         success: true,
         message: 'It works!',
         data,
         table
+      })
+    })
+  .catch((error) => {
+    const { code, errors, response: data } = error;
+
+    res.status(code).json({
+      success: false,
+      errors: errors || error,
+      message: data.data.error.message || ''
+    })
+  })
+}
+
+async function handleGetTable(res, session) {
+  getSheets({
+    spreadsheetId: process.env.DATABASE_ID,
+    range: DATABASE_SHEETS.CLIENTS
+  })
+  .then(({ data }) => {
+      const table = session.user === 'admin' ? TableFactory(data.values) : {header: [], body: []};
+
+      res.status(201).json({
+        success: true,
+        message: 'It works!',
+        table,
+        requestBy: session?.user?.name
       })
     })
     .catch((error) => {
@@ -32,7 +64,7 @@ async function handleGetTable(res) {
 async function handleLogin(req, res) {
   getSheets({
     spreadsheetId: process.env.DATABASE_ID,
-    range: 'USERS'
+    range: DATABASE_SHEETS.ADVISERS
   })
     .then(({ data }) => {
       const table = TableFactory(data.values);
@@ -67,10 +99,18 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'GET') {
-    return handleGetTable(res)
+    return handleGetTable(res, session)
   }
+
   if (req.method === 'POST') {
-    return handleLogin(req, res)
+    const { event } = req.body
+
+    switch (event) {
+      case SHEET_API_ACTIONS.GET_ADVISER_CLIENTS:
+        return getAdviserClients(req, res)
+      default:
+        return handleLogin(req, res)
+    }
   }
 
   return res.status(200).json({ message: 'Hey!' })
