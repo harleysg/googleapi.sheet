@@ -6,7 +6,10 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider
+      session={session}
+      // Re-fetches session when window is focused
+      refetchOnWindowFocus={true}>
       <Component {...pageProps} />
     </SessionProvider>
   )
