@@ -1,49 +1,76 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef, useState, useEffect } from 'react'
+import { useSession, getSession } from 'next-auth/react'
+
+import { SHEET_API_ACTIONS } from '@constants/index'
+import { sheetPost, getNameToEmail } from '@services/index'
 import Layout from '@components/layout'
-import { sheetPost } from '@services/index'
+import Table from '@components/table'
 
-const IData = { isAvailable: false, message: '', success: false }
-
-export default function LoginPage() {
+export default function () {
+  const { data: session } = useSession()
   const formRef = useRef(null)
-  const [form, setForm] = useState({
-    email: '',
-    password: ''
+  const [pageInfo, setPageInfo] = useState({
+    title: 'loading...',
+    table: {
+      header: [],
+      body: []
+    }
   })
 
   const submitHandler = useCallback(
     (event) => {
-      event.preventDefault();
+      event.preventDefault()
 
-      sheetPost(form).then((data = IData) => {
-        console.log('🤘 ~ getSheetInfo ~ sheetGet', data);
-        if (data.success && data.isAvailable) {
-          formRef.current.reset();
-        }
-      })
+      session &&
+      sheetPost({
+        user: session?.user?.email,
+        event: SHEET_API_ACTIONS.GET_ADVISER_CLIENTS
+        }).then((data) => {
+          data && setPageInfo(page => ({...page, table: data.table}))
+        })
     },
-    [form]
+    [session, setPageInfo]
   )
+  
+  useEffect(() => {
+    session && sheetPost({
+      user: session?.user?.email,
+      event: SHEET_API_ACTIONS.GET_ADVISER_CLIENTS
+      }).then((data) => {
+        data &&
+        setPageInfo((page) => ({
+          ...page,
+          table: data.table,
+          title: `Hola ${getNameToEmail(session?.user?.email)}`,
+        }))
+      })
+  }, [setPageInfo])
+
+  if (!session) {
+    return (
+      <Layout title='Adviser'>
+        <h1>Private page, should be sign in to continue.</h1>
+      </Layout>
+    )
+  }
 
   return (
     <Layout title='Adviser'>
+      <h1>{pageInfo.title}</h1>
       <form onSubmit={submitHandler} ref={formRef}>
-        <input
-          type={'email'}
-          name='email'
-          placeholder='Enter your email'
-          onChange={(event) => setForm({ ...form, email: event.target.value })}
-        />
-        <input
-          type={'password'}
-          name='password'
-          placeholder='Enter your password'
-          onChange={(event) =>
-            setForm({ ...form, password: event.target.value })
-          }
-        />
-        <button>submit</button>
+        <button className='c-btn'>Refresh list</button>
       </form>
+      <Table data={pageInfo.table}/>
     </Layout>
-  );
+  )
+}
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx)
+
+  return {
+    props: {
+      session
+    }
+  }
 }
