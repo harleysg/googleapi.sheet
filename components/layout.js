@@ -1,7 +1,8 @@
 import Head from 'next/head'
-import Header from './header'
+import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
-import { useSession } from "next-auth/react"
+import Header from './header'
 
 export default function Layout({ children, title = 'googleapi sheet' }) {
   const { data: session } = useSession()
@@ -19,6 +20,14 @@ export default function Layout({ children, title = 'googleapi sheet' }) {
       <main className='o-main'>
         <div className='o-wrapper'>{children}</div>
       </main>
+
+      <footer className='o-wrapper o-footer'>
+        <Link href='https://bit.ly/36RsoAA' passHref={true}>
+          <a target={'_blank'}>
+            <span>Powered by </span> <span className='c-link'>@HarleySG</span>
+          </a>
+        </Link>
+      </footer>
     </>
-  );
+  )
 }
