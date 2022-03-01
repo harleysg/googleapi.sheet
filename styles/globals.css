@@ -11,15 +11,20 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  }
-  
-  html {
-    font-size: var(--fz);
-  }
+}
+
+html {
+  font-size: var(--fz);
+}
 
 body {
   background-color: var(--theme-bg-color);
   color: var(--theme-color);
+  font-size: 1rem;
+}
+
+button {
+  font-family: inherit;
   font-size: 1rem;
 }
 
@@ -54,7 +59,6 @@ body > [id] {
 .o-main {
   min-height: 90vh;
   padding: 2.5rem 0;
-  display: grid;
 }
 
 .o-header {
@@ -64,9 +68,19 @@ body > [id] {
   background-color: inherit;
 }
 
+.c-btn,
+.o-header_btn {
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 0 0 1px var(--theme-color-link);
+}
+
+.c-btn,
+.o-header_btn,
 .o-header_link {
   color: var(--theme-color);
   padding: 0.2rem 0.5rem;
+  cursor: pointer;
 }
 .o-header_nav {
   display: flex;
@@ -81,7 +95,67 @@ body > [id] {
 
 .o-header_link:hover,
 .o-header_link:focus,
-.o-header_link:active,
+.o-header_link:active {
+  color: var(--theme-color);
+  background-color: var(--theme-color-link);
+  text-decoration: none;
+}
+
 .o-header_link.is-active {
   color: var(--theme-color-link);
+  box-shadow: 0 2px 0 0 var(--theme-color-link);
+}
+
+.o-header_link.is-active:hover,
+.o-header_link.is-active:focus {
+  color: var(--theme-color);
+}
+
+.o-header_btn:hover,
+.o-header_btn:focus,
+.o-header_btn {
+  color: var(--theme-color);
+  background-color: var(--theme-color-link);
+}
+
+.c-btn:hover,
+.c-btn:focus {
+  background-color: var(--theme-color-link);
+}
+
+.c-table_wrapper {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 1rem;
+}
+.c-table {
+  border-collapse: collapse;
+  width: 90%;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.c-table td,
+.c-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.c-table tr:nth-child(even) {
+  background-color: #f2f2f229;
+}
+
+.c-table tr:hover {
+  color: var(--theme-bg-color);
+  background-color: #ddd;
+}
+
+.c-table th {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  text-align: left;
+  background-color: var(--theme-color-link);
+  color: var(--theme-color);
 }
