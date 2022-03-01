@@ -1,8 +1,9 @@
 
-export default function Brand () {
+export default function Brand ({size}) {
   return (
-    <figure style={{margin: 0}}>
-      <SvgComponent />
+    <figure style={{margin: 0, display: 'flex', alignItems: 'center', gap: '1rem'}}>
+      <SvgComponent width={size}/>
+      <span>Connect my GSheets</span>
     </figure>
   )
 }
@@ -12,6 +13,7 @@ const SvgComponent = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 49 67"
     width={49}
     height={67}
     {...props}
