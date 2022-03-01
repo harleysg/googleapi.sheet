@@ -4,7 +4,8 @@
     "baseUrl": "./",
     "paths": {
       "@services/*": ["services/*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@constants/*": ["constant/*"]
     }
   }
 }
